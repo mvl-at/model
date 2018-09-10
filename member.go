@@ -1,6 +1,10 @@
 package model
 
-import "github.com/mvl-at/qbs"
+import (
+	"github.com/mvl-at/qbs"
+	"strings"
+	"strconv"
+)
 
 //Defines a member.
 type Member struct {
@@ -25,5 +29,27 @@ func (m *Member) Validate(qbs *qbs.Qbs) error {
 	if m.Instrument != nil {
 		m.InstrumentId = m.Instrument.Id
 	}
+
+	if len(m.Username) == 0 {
+		m.Username = identifier(m)
+	}
+
+	if len(m.Picture) == 0 {
+		m.Picture = identifier(m)
+	}
 	return nil
+}
+
+//generates human readable identifier
+func identifier(m *Member) string {
+	replacements := map[string]string{
+		"ä": "ae",
+		"ö": "oe",
+		"ü": "ue",
+		"ß": "s"}
+	identifier := strings.ToLower(strings.Join([]string{m.FirstName, m.LastName, strconv.Itoa(m.Joined)}, "-"))
+	for k, v := range replacements {
+		identifier = strings.Replace(identifier, k, v, -1)
+	}
+	return identifier
 }

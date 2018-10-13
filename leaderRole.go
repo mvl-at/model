@@ -17,6 +17,7 @@ type LeaderRoleMember struct {
 	Member       *Member     `json:"member" roles:"leader"`
 	MemberId     int64       `qbs:"fk:Member" json:"memberId" roles:"leader"`
 	Priority     int         `json:"priority" roles:"leader"`
+	Deputy       bool        `json:"deputy" roles:"leader"`
 }
 
 //Validates all association pointers and assign its id fields to the one of LeaderRoleMember.

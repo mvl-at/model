@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"github.com/mvl-at/qbs"
+	"time"
+)
 
 //Defines an event.
 type Event struct {
@@ -15,4 +18,29 @@ type Event struct {
 	MusicianPlace string    `json:"musicianPlace" roles:"event"`
 	Internal      bool      `json:"internal" roles:"event"`
 	Important     bool      `json:"important" roles:"event"`
+}
+
+//Defines a declination per member per event
+type Declination struct {
+	Id       int64     `json:"id"`
+	Event    *Event    `json:"event"`
+	EventId  int64     `json:"eventId" qbs:"fk:Event"`
+	Member   *Member   `json:"member"`
+	MemberId int64     `json:"memberId" qbs:"fk:Member"`
+	Time     time.Time `json:"time"`
+	Declined bool      `json:"declined"`
+}
+
+//Validates all association pointers and assign its id fields to the one of LeaderRoleMember.
+func (d *Declination) Validate(qbs *qbs.Qbs) error {
+
+	if d.Member != nil {
+		d.MemberId = d.Member.Id
+	}
+
+	if d.Event != nil {
+		d.EventId = d.Event.Id
+	}
+
+	return nil
 }

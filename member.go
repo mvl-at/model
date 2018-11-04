@@ -19,7 +19,7 @@ type Member struct {
 	LoginAllowed bool      `json:"loginAllowed"`
 	Username     string    `json:"username"`
 	Password     string    `json:"-"`
-	Gender       string    `json:"gender"`
+	Gender       string    `json:"gender" roles:"member"`
 
 	Instrument   *Instrument `json:"instrument" roles:"member"`
 	InstrumentId int64       `qbs:"fk:Instrument" json:"instrumentId" roles:"member"`

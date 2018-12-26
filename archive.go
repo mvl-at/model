@@ -10,6 +10,7 @@ type Archive struct {
 	Arranger  string `json:"arranger" roles:"archive"`
 	Publisher string `json:"publisher" roles:"archive"`
 	Subtitles string `json:"subtitles" roles:"archive"`
+	Score     bool   `json:"score" roles:"archive"`
 	Location  string `json:"location" roles:"archive"`
 	Note      string `json:"note" roles:"archive"`
 }
